@@ -14,6 +14,7 @@ func main() {
 	mux.HandleFunc("/api/cpu", handlers.CPUHandler)
 	mux.HandleFunc("/api/load", handlers.LoadHandler)
 	mux.HandleFunc("/api/disk", handlers.DiskHandler)
+	mux.HandleFunc("/api/uptime", handlers.UptHandler)
 
 	log.Println("Server running on :8080")
 	http.ListenAndServe(":8080", mux)
