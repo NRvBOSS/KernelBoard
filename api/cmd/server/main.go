@@ -1,50 +1,18 @@
 package main
 
 import (
-	"bufio"
-	"encoding/json"
+	"log"
 	"net/http"
-	"os"
-	"strings"
+
+	"github.com/NRvBOSS/KernelBoard/api/internal/handlers"
 )
 
-type MemoryStats struct {
-	Total string `json:"total"`
-	Free  string `json:"free"`
-}
-
-func memoryHandler(w http.ResponseWriter, r *http.Request) {
-	file, err := os.Open("/proc/meminfo")
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	defer file.Close()
-
-	var total, free string
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.HasPrefix(line, "MemTotal") {
-			total = strings.Fields(line)[1] + " kB"
-		}
-		if strings.HasPrefix(line, "MemFree") {
-			free = strings.Fields(line)[1] + " kB"
-		}
-	}
-
-	stats := MemoryStats{
-		Total: total,
-		Free:  free,
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(stats)
-}
-
 func main() {
-	http.HandleFunc("/api/memory", memoryHandler)
+	mux := http.NewServeMux()
 
-	http.ListenAndServe(":8080", nil)
+	mux.HandleFunc("/api/memory", handlers.MemoryHandler)
+	mux.HandleFunc("/api/cpu", handlers.CPUHandler)
+
+	log.Println("Server running on :8080")
+	http.ListenAndServe(":8080", mux)
 }
