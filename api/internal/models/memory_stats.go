@@ -1,6 +1,8 @@
 package models
 
 type MemoryStats struct {
-	Total string
-	Free  string
+	TotalGB      string `json:"total_gb"`
+	UsedGB       string `json:"used_gb"`
+	FreeGB       string `json:"free_gb"`
+	UsagePercent string `json:"usage_percent"`
 }
