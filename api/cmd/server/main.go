@@ -30,6 +30,7 @@ func main() {
 	mux.HandleFunc("/api/load", handlers.LoadHandler)
 	mux.HandleFunc("/api/disk", handlers.DiskHandler)
 	mux.HandleFunc("/api/uptime", handlers.UptHandler)
+	mux.HandleFunc("/api/system", handlers.SystemHandler)
 
 	log.Println("Server running on :8080")
 	http.ListenAndServe(":8080", enableCORS(mux))
