@@ -1,6 +1,6 @@
 package models
 
 type UptStats struct {
-	UptimeSeconds float64 `json:"uptimeseconds"`
-	UptimeHours   float64 `json:"uptimehours"`
+	UptimeSeconds float64 `json:"uptime_seconds"`
+	UptimeHours   float64 `json:"uptime_hours"`
 }
